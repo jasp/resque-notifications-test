@@ -1,9 +1,15 @@
-%p#notice= notice
+%article#post
+  %header
+    %time=l @post.created_at, :format => :short
+  = simple_format @post.body
 
-%p
-  %b Body:
-  = @post.body
-
-= link_to 'Edit', edit_post_path(@post)
-\|
-= link_to 'Back', posts_path
+  - @post.comments.each do |comment|
+    %article.comment
+      %time=l @post.created_at
+      = comment.body
+  %footer
+    %nav
+      %ul
+        %li= link_to 'Post new comment', new_post_comment_path(@post)
+        %li= link_to 'Edit post', edit_post_path(@post)
+        %li= link_to 'Destroy post', @post, :confirm => 'Are you sure?', :method => :delete

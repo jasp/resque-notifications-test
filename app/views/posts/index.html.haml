@@ -1,19 +1,12 @@
 %h1 Listing posts
 
-%table
-  %tr
-    %th Body
-    %th
-    %th
-    %th
-
-  - @posts.each do |post|
-    %tr
-      %td= post.body
-      %td= link_to 'Show', post
-      %td= link_to 'Edit', edit_post_path(post)
-      %td= link_to 'Destroy', post, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
 = link_to 'New Post', new_post_path
+
+#posts
+  - @posts.each do |post|
+    %article.post
+      %header
+        %time=l post.created_at
+      = simple_format post.body
+      %nav
+        = link_to 'Show comments', post
